@@ -61,6 +61,13 @@ player_1_misses = 0
 player_2_misses = 0
 game_time = 60
 start_time = 0
+crosshair_speed = 8
+
+# -- Player crosshair positions --
+player_1_x = 250
+player_1_y = 400
+player_2_x = 750
+player_2_y = 400
 
 # -- Enemy Variables --
 enemies = []
@@ -201,6 +208,12 @@ def draw_crosshair(x, y, colour):
         crosshair_dot_size
     )
 
+# -- Keep crosshair inside screen --
+def keep_crosshair_on_screen(x,y):
+    x = max(crosshair_width // 2, min(WIDTH - crosshair_width // 2, x))
+    y = max(crosshair_height // 2 ,min(HEIGHT - crosshair_height // 2, y))
+    return x, y
+
 # -- Create enemy --
 def create_enemy(x, y, velocity_x, velocity_y):
     # Create dictionary to store everything belonging to 1 enemy
@@ -211,6 +224,49 @@ def create_enemy(x, y, velocity_x, velocity_y):
         "velocity_y": velocity_y
     }
 
+# -- Shoot at enemy --
+def shoot(x, y, player):
+    global player_1_score, player_2_score
+    global player_1_misses, player_2_misses
+
+    # Create collision rectangle around crosshair
+    crosshair_rect = pygame.Rect(
+        x - crosshair_width // 2,
+        y - crosshair_height // 2,
+        crosshair_width,
+        crosshair_height
+    )
+
+    # Check every enemy
+    for enemy in enemies:
+        enemy_rect = pygame.Rect(
+            enemy["x"],
+            enemy["y"],
+            enemy_size,
+            enemy_size
+        )
+
+        # Check if crosshair hit enemy
+        if crosshair_rect.colliderect(enemy_rect):
+            enemies.remove(enemy)
+
+            if player == 1:
+                player_1_score += 1
+                print("P1 Hit!")
+            elif player == 2:
+                player_2_score += 1
+                print("P2 Hit!")
+
+            # Stop checking enemies
+            return
+
+    # If no enemy was hit
+    if player == 1:
+        player_1_misses += 1
+        print("P1 Misses!")
+    elif player == 2:
+        player_2_misses += 1
+        print("P2 Misses!")
 
 # -- Game Loop --
 running = True
@@ -452,7 +508,18 @@ while running:
             )
 
         elif game_mode == "two_player":
-
+            # Draw Player 1's crosshair
+            draw_crosshair(
+                player_1_x,
+                player_1_y,
+                player_1_crosshair
+            )
+            # Draw Player 2's crosshair
+            draw_crosshair(
+                player_2_x,
+                player_2_y,
+                player_2_crosshair
+            )
             # Draw title
             TITLE = SCREEN_TITLE.render(
                 "2 PLAYERS - SETUP",
@@ -552,6 +619,40 @@ while running:
     elif game_state == GAME:
         SCREEN.fill(BLACK)
 
+        # -- Continuous 2-player crosshair movement --
+        if game_mode == "two_player":
+            keys = pygame.key.get_pressed()
+
+            # Player 1 - WASD
+            if keys[pygame.K_w]:
+                player_1_y -= crosshair_speed
+            if keys[pygame.K_s]:
+                player_1_y += crosshair_speed
+            if keys[pygame.K_a]:
+                player_1_x -= crosshair_speed
+            if keys[pygame.K_d]:
+                player_1_x += crosshair_speed
+
+            # Player 2 - Arrow Keys
+            if keys[pygame.K_UP]:
+                player_2_y -= crosshair_speed
+            if keys[pygame.K_DOWN]:
+                player_2_y += crosshair_speed
+            if keys[pygame.K_LEFT]:
+                player_2_x -= crosshair_speed
+            if keys[pygame.K_RIGHT]:
+                player_2_x += crosshair_speed
+
+            # Keep both crosshairs inside screen
+            player_1_x, player_1_y = keep_crosshair_on_screen(
+                player_1_x,
+                player_1_y
+            )
+            player_2_x, player_2_y = keep_crosshair_on_screen(
+                player_2_x,
+                player_2_y
+            )
+
         for enemy in enemies:
             # Create enemy rectangle
             enemy_rect = pygame.Rect(
@@ -583,10 +684,25 @@ while running:
         # -- Draw crosshair --
         mouse_x, mouse_y = pygame.mouse.get_pos()
         if game_mode == "single":
+            mouse_x, mouse_y = keep_crosshair_on_screen(
+                mouse_x,
+                mouse_y
+            )
             draw_crosshair(
                 mouse_x,
                 mouse_y,
                 player_1_crosshair,
+            )
+        elif game_mode == "two_player":
+            draw_crosshair(
+                player_1_x,
+                player_1_y,
+                player_1_crosshair
+            )
+            draw_crosshair(
+                player_2_x,
+                player_2_y,
+                player_2_crosshair
             )
 
         # -- Single-player game --
@@ -627,6 +743,7 @@ while running:
                 center=(WIDTH // 2, 40)
             )
             SCREEN.blit(timer_text, timer_rect)
+
 
         # -- 2-player game --
         elif game_mode == "two_player":
@@ -764,6 +881,12 @@ while running:
             running = False
 
         if event.type == pygame.MOUSEBUTTONDOWN: # mouse clicks
+            # -- Single-player shooting --
+            if game_state == GAME and game_mode == "single":
+                # Check if left mouse button was clicked
+                if event.button == 1:
+                     shoot(mouse_x, mouse_y, 1)
+
             # -- Main Menu buttons --
             if game_state == MENU:
                 if select_mode_button.collidepoint(event.pos):
@@ -876,6 +999,11 @@ while running:
                     # Reset misses
                     player_1_misses = 0
                     player_2_misses = 0
+                    # Reset crosshair positions
+                    player_1_x = 250
+                    player_1_y = 400
+                    player_2_x = 750
+                    player_2_y = 400
 
                     # -- Create enemies based on difficulty --
                     enemies = []
@@ -919,6 +1047,7 @@ while running:
 
         # -- Keyboard Input --
         if event.type == pygame.KEYDOWN:
+
             # -- Player 1's typing --
             if current_input == "player_1":
                 # Remove the last character
@@ -927,12 +1056,23 @@ while running:
                 # Add typed character
                 else:
                     player_1_name += event.unicode
+
             # -- Player 2's typing
             elif current_input == "player_2":
                 if event.key == pygame.K_BACKSPACE:
                     player_2_name = player_2_name[:-1]
                 else:
                     player_2_name += event.unicode
+
+            # -- Player Shooting --
+            if game_state == GAME and game_mode == "two_player":
+                # Player 1 - SPACE BAR
+                if event.key == pygame.K_SPACE:
+                    shoot(player_1_x, player_1_y, 1)
+
+                # Player 2 - ENTER
+                if event.key == pygame.K_RETURN:
+                    shoot(player_2_x, player_2_y, 2)
 
     pygame.display.flip()
 
