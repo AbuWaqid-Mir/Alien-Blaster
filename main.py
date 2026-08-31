@@ -71,7 +71,13 @@ player_2_y = 400
 
 # -- Enemy Variables --
 enemies = []
-enemy_size = 50
+enemy_width = 70
+enemy_height = 55
+enemy_image = pygame.image.load("images/enemy.png").convert_alpha()
+enemy_image = pygame.transform.scale(
+    enemy_image,
+    (enemy_width, enemy_height)
+)
 
 # -- Crosshair Variables --
 crosshair_width = 30
@@ -224,6 +230,21 @@ def create_enemy(x, y, velocity_x, velocity_y):
         "velocity_y": velocity_y
     }
 
+# -- Create a new random enemy --
+def spawn_enemy():
+    enemy_speed = enemy_settings[difficulty]["speed"]
+    enemy_x = random.randint(0, WIDTH - enemy_width)
+    enemy_y = random.randint(100, HEIGHT - enemy_height)
+    velocity_x = random.choice([-enemy_speed, enemy_speed])
+    velocity_y = random.choice([-enemy_speed, enemy_speed])
+
+    return create_enemy(
+        enemy_x,
+        enemy_y,
+        velocity_x,
+        velocity_y
+    )
+
 # -- Shoot at enemy --
 def shoot(x, y, player):
     global player_1_score, player_2_score
@@ -242,20 +263,19 @@ def shoot(x, y, player):
         enemy_rect = pygame.Rect(
             enemy["x"],
             enemy["y"],
-            enemy_size,
-            enemy_size
+            enemy_width,
+            enemy_height
         )
 
         # Check if crosshair hit enemy
         if crosshair_rect.colliderect(enemy_rect):
             enemies.remove(enemy)
+            enemies.append(spawn_enemy())
 
             if player == 1:
                 player_1_score += 1
-                print("P1 Hit!")
             elif player == 2:
                 player_2_score += 1
-                print("P2 Hit!")
 
             # Stop checking enemies
             return
@@ -263,10 +283,8 @@ def shoot(x, y, player):
     # If no enemy was hit
     if player == 1:
         player_1_misses += 1
-        print("P1 Misses!")
     elif player == 2:
         player_2_misses += 1
-        print("P2 Misses!")
 
 # -- Game Loop --
 running = True
@@ -343,6 +361,63 @@ while running:
             center=(WIDTH // 2, 150)
         )
         SCREEN.blit(TITLE, title_rect)
+
+        # Instructions
+        single_player_instructions = [
+            "SINGLE PLAYER",
+            "",
+            "Move your crosshair",
+            "using the mouse.",
+            "",
+            "Left-click to shoot",
+            "Hit enemy spaceships.",
+            "to increase your score.",
+        ]
+
+        two_player_instructions = [
+            "2 PLAYERS",
+            "",
+            "Player 1:",
+            "WASD to move",
+            "SPACE to shoot.",
+            "",
+            "Player 2",
+            "ARROW KEYS to move",
+            "ENTER to shoot.",
+        ]
+
+        # Display Single Player instructions
+        y = 240
+        for line in single_player_instructions:
+            text = FONT.render(line, True, WHITE)
+            text_rect = text.get_rect(
+                center=(250, y)
+            )
+            SCREEN.blit(text, text_rect)
+            y += 35
+
+        # Display 2 Player instructions
+        y = 220
+        for line in two_player_instructions:
+            text = FONT.render(line, True, WHITE)
+            text_rect = text.get_rect(
+                center=(750, y)
+            )
+            SCREEN.blit(text, text_rect)
+            y += 35
+
+        # Display time limit
+        y = 580
+        time_limit = [
+            "You have 60 seconds to get the highest score.",
+        ]
+        for line in time_limit:
+            text = FONT.render(line, True, RED)
+            text_rect = text.get_rect(
+                center=(500, y)
+            )
+            SCREEN.blit(text, text_rect)
+            y += 35
 
         # Draw back button
         back_button = draw_button(
@@ -655,18 +730,12 @@ while running:
 
         for enemy in enemies:
             # Create enemy rectangle
-            enemy_rect = pygame.Rect(
-                enemy["x"],
-                enemy["y"],
-                enemy_size,
-                enemy_size
-            )
+
 
             # Draw enemy
-            pygame.draw.rect(
-                SCREEN,
-                RED,
-                enemy_rect
+            SCREEN.blit(
+                enemy_image,
+                (enemy["x"], enemy["y"])
             )
 
             # Move enemy
@@ -674,11 +743,11 @@ while running:
             enemy["y"] += enemy["velocity_y"]
 
             # Bounce off left and right sides
-            if enemy["x"] <= 0 or enemy["x"] + enemy_size >= WIDTH:
+            if enemy["x"] <= 0 or enemy["x"] + enemy_width >= WIDTH:
                 enemy["velocity_x"] *= -1
 
             # Bounce off top and bottom
-            if enemy["y"] <= 0 or enemy["y"] + enemy_size >= HEIGHT:
+            if enemy["y"] <= 0 or enemy["y"] + enemy_height >= HEIGHT:
                 enemy["velocity_y"] *= -1
 
         # -- Draw crosshair --
@@ -1013,8 +1082,8 @@ while running:
                     # Check enemy count, then creates that many enemies
                     for i in range(enemy_amount):
                         # Random starting position
-                        enemy_x = random.randint(0, WIDTH - enemy_size)
-                        enemy_y = random.randint(100, HEIGHT - enemy_size)
+                        enemy_x = random.randint(0, WIDTH - enemy_width)
+                        enemy_y = random.randint(100, HEIGHT - enemy_height)
                         # Random movement direction
                         velocity_x = random.choice([-enemy_speed, enemy_speed])
                         velocity_y = random.choice([-enemy_speed, enemy_speed])
