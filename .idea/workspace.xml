@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fff0685b-4276-473e-890d-fe00f87e68db" name="Changes" comment="edits to leaderboard viewing">
+      <change afterPath="$PROJECT_DIR$/.idea/4. Spaceship Shooter.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AbuWaqid-Mir&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AbuWaqid-Mir/Spaceship-Shooter.git&quot;,
+    &quot;accountId&quot;: &quot;ed189822-efbb-4b9b-a006-01dc10294dd4&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="3HetD4f831mqe0nQHxHM39mEOGM" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-7e47963ff851-f0eec537fc84-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.23892.515" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fff0685b-4276-473e-890d-fe00f87e68db" name="Changes" comment="" />
+      <created>1786240244198</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1786240244198</updated>
+    </task>
+    <task id="LOCAL-00001" summary="made window &amp; menu">
+      <option name="closed" value="true" />
+      <created>1786244068878</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1786244068878</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update menu">
+      <option name="closed" value="true" />
+      <created>1786269305420</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1786269305420</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update menu">
+      <option name="closed" value="true" />
+      <created>1786311381150</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1786311381150</updated>
+    </task>
+    <task id="LOCAL-00004" summary="made 3/4 menu">
+      <option name="closed" value="true" />
+      <created>1786311938875</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1786311938875</updated>
+    </task>
+    <task id="LOCAL-00005" summary="finish menu &amp; start game design">
+      <option name="closed" value="true" />
+      <created>1786357738363</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1786357738363</updated>
+    </task>
+    <task id="LOCAL-00006" summary="finish menu &amp; activate game">
+      <option name="closed" value="true" />
+      <created>1786385642682</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1786385642682</updated>
+    </task>
+    <task id="LOCAL-00007" summary="updated">
+      <option name="closed" value="true" />
+      <created>1786386899705</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1786386899705</updated>
+    </task>
+    <task id="LOCAL-00008" summary="added enemy movement &amp; correct player name issue">
+      <option name="closed" value="true" />
+      <created>1786722157301</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1786722157301</updated>
+    </task>
+    <task id="LOCAL-00009" summary="improved enemy movement, amount &amp; speed">
+      <option name="closed" value="true" />
+      <created>1786904505031</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1786904505031</updated>
+    </task>
+    <task id="LOCAL-00010" summary="enemy spawn position varies">
+      <option name="closed" value="true" />
+      <created>1786908228279</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1786908228279</updated>
+    </task>
+    <task id="LOCAL-00011" summary="added single-player crosshair movement">
+      <option name="closed" value="true" />
+      <created>1786908358065</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1786908358065</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add 1 to player_score or misses">
+      <option name="closed" value="true" />
+      <created>1788003603289</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1788003603289</updated>
+    </task>
+    <task id="LOCAL-00013" summary="added instructions &amp; images/sounds">
+      <option name="closed" value="true" />
+      <created>1788189565701</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1788189565701</updated>
+    </task>
+    <task id="LOCAL-00014" summary="edits to leaderboard viewing">
+      <option name="closed" value="true" />
+      <created>1788423516806</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1788423516806</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="made window &amp; menu" />
+    <MESSAGE value="update menu" />
+    <MESSAGE value="made 3/4 menu" />
+    <MESSAGE value="finish menu &amp; start game design" />
+    <MESSAGE value="finish menu &amp; activate game" />
+    <MESSAGE value="updated" />
+    <MESSAGE value="added enemy movement &amp; correct player name issue" />
+    <MESSAGE value="improved enemy movement, amount &amp; speed" />
+    <MESSAGE value="enemy spawn position varies" />
+    <MESSAGE value="added single-player crosshair movement" />
+    <MESSAGE value="add 1 to player_score or misses" />
+    <MESSAGE value="added instructions &amp; images/sounds" />
+    <MESSAGE value="edits to leaderboard viewing" />
+    <option name="LAST_COMMIT_MESSAGE" value="edits to leaderboard viewing" />
+  </component>
+</project>
