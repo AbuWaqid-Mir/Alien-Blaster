@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import json
 
 # -- Initialise all Pygame modules --
 pygame.init()
@@ -35,6 +36,8 @@ FONT = pygame.font.SysFont(None, 30)
 MENU = "menu"
 INSTRUCTIONS = "instructions"
 LEADERBOARD = "leaderboard"
+SINGLE_LEADERBOARD = "single_leaderboard"
+TWO_PLAYER_LEADERBOARD = "two_player_leaderboard"
 SETTINGS = "settings"
 MODE_SELECT = "mode_select"
 PLAYER_SETUP = "player_setup"
@@ -73,7 +76,7 @@ player_2_y = 400
 enemies = []
 enemy_width = 70
 enemy_height = 55
-enemy_image = pygame.image.load("images/enemy.png").convert_alpha()
+enemy_image = pygame.image.load("images/enemy_spaceship.png").convert_alpha()
 enemy_image = pygame.transform.scale(
     enemy_image,
     (enemy_width, enemy_height)
@@ -286,6 +289,44 @@ def shoot(x, y, player):
     elif player == 2:
         player_2_misses += 1
 
+# -- Load leaderboard data --
+def load_leaderboard():
+    try:
+        # Open "leaderboard.json" & convert the JSON into a Python list
+        with open("leaderboard.json", "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return[]
+
+# -- Save leaderboard data --
+def save_leaderboard(leaderboard):
+    with open("leaderboard.json", "w") as file:
+        # Take the Python data and write it into a JSON file
+        json.dump(leaderboard, file, indent=4)
+        # indent=4 formats JSON with 4 spaces so it's easier to read
+
+# -- Add score to leaderboard --
+def add_score(name, mode, difficulty, score, misses):
+    # Load existing leaderboard
+    leaderboard = load_leaderboard()
+    # Create dictionary containing player's result
+    new_score = {
+        "name": name,
+        "mode": mode,
+        "difficulty": difficulty,
+        "score": score,
+        "misses": misses
+    }
+    # Add that result to "new_score"
+    leaderboard.append(new_score)
+
+    # Sort highest score first
+    # lambda x: x["score"] - for each player, get their score
+    leaderboard.sort(key=lambda x: x["score"], reverse=True)
+
+    # Saves updated list back to the JSON file
+    save_leaderboard(leaderboard)
+
 # -- Game Loop --
 running = True
 while running:
@@ -443,7 +484,265 @@ while running:
         )
         SCREEN.blit(TITLE, title_rect)
 
+        # Single-player leaderboard button
+        single_leaderboard_button = draw_button(
+            "SINGLE PLAYER",
+            350,
+            280,
+            300,
+            60
+        )
+
+        # 2-player leaderboard button
+        two_player_leaderboard_button = draw_button(
+            "2 PLAYERS",
+            350,
+            380,
+            300,
+            60
+        )
+
         # Draw back button
+        back_button = draw_button(
+            "BACK",
+            50,
+            700,
+            150,
+            50
+        )
+
+    # -- Single Player Leaderboard --
+    elif game_state == SINGLE_LEADERBOARD:
+        SCREEN.fill(BLACK)
+
+        # Draw title
+        TITLE = SCREEN_TITLE.render(
+            "SINGLE PLAYER",
+            True,
+            WHITE
+        )
+        title_rect = TITLE.get_rect(
+            center=(WIDTH // 2, 150)
+        )
+        SCREEN.blit(TITLE, title_rect)
+
+        # Load leaderboard
+        leaderboard = load_leaderboard()
+
+        # Only get single-player scores
+        single_scores = []
+
+        for player in leaderboard:
+            if player["mode"] == "single":
+                single_scores.append(player)
+
+        # Sort highest score first
+        single_scores.sort(
+            key=lambda x: x["score"],
+            reverse=True
+        )
+
+        # Column headings
+        headings = [
+            "#",
+            "NAME",
+            "DIFFICULTY",
+            "SCORE",
+            "MISSES"
+        ]
+
+        heading_x = [70, 200, 450, 700, 850]
+
+        for i in range(len(headings)):
+            text = FONT.render(
+                headings[i],
+                True,
+                WHITE
+            )
+            text_rect = text.get_rect(
+                center=(heading_x[i], 240)
+            )
+            SCREEN.blit(text, text_rect)
+
+        # Display scores
+        y = 290
+        position = 1
+
+        for player in single_scores:
+            position_text = FONT.render(
+                str(position),
+                True,
+                WHITE
+            )
+            SCREEN.blit(
+                position_text,
+                position_text.get_rect(center=(70, y))
+            )
+
+            name_text = FONT.render(
+                player["name"],
+                True,
+                WHITE
+            )
+            SCREEN.blit(
+                name_text,
+                name_text.get_rect(center=(210, y))
+            )
+
+            difficulty_text = FONT.render(
+                player["difficulty"],
+                True,
+                WHITE
+            )
+            SCREEN.blit(
+                difficulty_text,
+                difficulty_text.get_rect(center=(450, y))
+            )
+
+            score_text = FONT.render(
+                str(player["score"]),
+                True,
+                WHITE
+            )
+            SCREEN.blit(
+                score_text,
+                score_text.get_rect(center=(700, y))
+            )
+
+            misses_text = FONT.render(
+                str(player["misses"]),
+                True,
+                WHITE
+            )
+            SCREEN.blit(
+                misses_text,
+                misses_text.get_rect(center=(850, y))
+            )
+
+            y += 45
+            position += 1
+
+        # Back button
+        back_button = draw_button(
+            "BACK",
+            50,
+            700,
+            150,
+            50
+        )
+
+    # -- 2-Player Leaderboard --
+    elif game_state == TWO_PLAYER_LEADERBOARD:
+        SCREEN.fill(BLACK)
+
+        # Draw title
+        TITLE = SCREEN_TITLE.render(
+            "2 PLAYER LEADERBOARD",
+            True,
+            WHITE
+        )
+        title_rect = TITLE.get_rect(
+            center=(WIDTH // 2, 150)
+        )
+        SCREEN.blit(TITLE, title_rect)
+
+        # Load leaderboard
+        leaderboard = load_leaderboard()
+
+        # Only get 2-player scores
+        two_player_scores = []
+
+        for player in leaderboard:
+            if player["mode"] == "two_player":
+                two_player_scores.append(player)
+
+        # Sort highest score first
+        two_player_scores.sort(
+            key=lambda x: x["score"],
+            reverse=True
+        )
+
+        # Column headings
+        headings = [
+            "#",
+            "NAME",
+            "DIFFICULTY",
+            "SCORE",
+            "MISSES"
+        ]
+
+        heading_x = [50, 150, 400, 650, 800]
+
+        for i in range(len(headings)):
+            text = FONT.render(
+                headings[i],
+                True,
+                WHITE
+            )
+            text_rect = text.get_rect(
+                center=(heading_x[i], 240)
+            )
+            SCREEN.blit(text, text_rect)
+
+        # Display scores
+        y = 290
+        position = 1
+
+        for player in two_player_scores:
+            position_text = FONT.render(
+                str(position),
+                True,
+                WHITE
+            )
+            SCREEN.blit(
+                position_text,
+                position_text.get_rect(center=(50, y))
+            )
+
+            name_text = FONT.render(
+                player["name"],
+                True,
+                WHITE
+            )
+            SCREEN.blit(
+                name_text,
+                name_text.get_rect(center=(150, y))
+            )
+
+            difficulty_text = FONT.render(
+                player["difficulty"],
+                True,
+                WHITE
+            )
+            SCREEN.blit(
+                difficulty_text,
+                difficulty_text.get_rect(center=(400, y))
+            )
+
+            score_text = FONT.render(
+                str(player["score"]),
+                True,
+                WHITE
+            )
+            SCREEN.blit(
+                score_text,
+                score_text.get_rect(center=(650, y))
+            )
+
+            misses_text = FONT.render(
+                str(player["misses"]),
+                True,
+                WHITE
+            )
+            SCREEN.blit(
+                misses_text,
+                misses_text.get_rect(center=(800, y))
+            )
+
+            y += 45
+            position += 1
+
+        # Back button
         back_button = draw_button(
             "BACK",
             50,
@@ -800,6 +1099,13 @@ while running:
                 timer_colour = RED
             # End game when timer reaches 0
             if game_time == 0:
+                add_score(
+                    player_1_name,
+                    "single",
+                    difficulty,
+                    player_1_score,
+                    player_1_misses
+                )
                 game_state = GAME_OVER
 
             # Timer
@@ -852,6 +1158,20 @@ while running:
                 timer_colour = RED
             # End game when timer reaches 0
             if game_time == 0:
+                add_score(
+                    player_1_name,
+                    "two_player",
+                    difficulty,
+                    player_1_score,
+                    player_1_misses,
+                )
+                add_score(
+                    player_2_name,
+                    "two_player",
+                    difficulty,
+                    player_2_score,
+                    player_2_misses,
+                )
                 game_state = GAME_OVER
 
             # Timer
@@ -976,8 +1296,22 @@ while running:
 
             # -- Leaderboard buttons --
             elif game_state == LEADERBOARD:
-                if back_button.collidepoint(event.pos):
+                if single_leaderboard_button.collidepoint(event.pos):
+                    game_state = SINGLE_LEADERBOARD
+                elif two_player_leaderboard_button.collidepoint(event.pos):
+                    game_state = TWO_PLAYER_LEADERBOARD
+                elif back_button.collidepoint(event.pos):
                     game_state = MENU
+
+            # -- Single Player Leaderboard buttons --
+            elif game_state == SINGLE_LEADERBOARD:
+                if back_button.collidepoint(event.pos):
+                    game_state = LEADERBOARD
+
+            # -- 2-Player Leaderboard buttons --
+            elif game_state == TWO_PLAYER_LEADERBOARD:
+                if back_button.collidpoint(event.pos):
+                    game_state = LEADERBOARD
 
             # -- Settings buttons --
             elif game_state == SETTINGS:

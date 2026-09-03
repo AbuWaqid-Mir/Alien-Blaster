@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "name": "jo",
+        "mode": "single",
+        "difficulty": "Hard",
+        "score": 22,
+        "misses": 28
+    },
+    {
+        "name": "testing_player",
+        "mode": "single",
+        "difficulty": "Medium",
+        "score": 14,
+        "misses": 9
+    }
+]
