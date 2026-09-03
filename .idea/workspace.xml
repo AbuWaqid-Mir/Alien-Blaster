@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fff0685b-4276-473e-890d-fe00f87e68db" name="Changes" comment="edits to leaderboard viewing">
-      <change afterPath="$PROJECT_DIR$/.idea/4. Spaceship Shooter.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="fff0685b-4276-473e-890d-fe00f87e68db" name="Changes" comment="?">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sounds/click.wav" beforeDir="false" afterPath="$PROJECT_DIR$/sounds/click.wav" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +180,23 @@
       <option name="project" value="LOCAL" />
       <updated>1788423516806</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="added click sound">
+      <option name="closed" value="true" />
+      <created>1788427116806</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1788427116806</updated>
+    </task>
+    <task id="LOCAL-00016" summary="?">
+      <option name="closed" value="true" />
+      <created>1788427130730</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1788427130730</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -201,6 +213,8 @@
     <MESSAGE value="add 1 to player_score or misses" />
     <MESSAGE value="added instructions &amp; images/sounds" />
     <MESSAGE value="edits to leaderboard viewing" />
-    <option name="LAST_COMMIT_MESSAGE" value="edits to leaderboard viewing" />
+    <MESSAGE value="added click sound" />
+    <MESSAGE value="?" />
+    <option name="LAST_COMMIT_MESSAGE" value="?" />
   </component>
 </project>

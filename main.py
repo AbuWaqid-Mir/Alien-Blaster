@@ -88,6 +88,7 @@ enemy_image = pygame.transform.scale(
 # -- Load sound effects --
 click_sound = pygame.mixer.Sound("sounds/click.wav")
 game_over_sound = pygame.mixer.Sound("sounds/game_over.wav")
+countdown_sound = pygame.mixer.Sound("sounds/beep_sound.wav")
 
 # -- Crosshair Variables --
 crosshair_width = 30
@@ -1126,6 +1127,8 @@ while running:
                     player_1_score,
                     player_1_misses
                 )
+                if sound_enabled:
+                    game_over_sound.play()
                 game_state = GAME_OVER
 
             # Timer
@@ -1192,6 +1195,8 @@ while running:
                     player_2_score,
                     player_2_misses,
                 )
+                if sound_enabled:
+                    game_over_sound.play()
                 game_state = GAME_OVER
 
             # Timer
