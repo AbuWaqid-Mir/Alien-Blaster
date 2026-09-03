@@ -5,6 +5,7 @@ import json
 
 # -- Initialise all Pygame modules --
 pygame.init()
+pygame.mixer.init()
 
 # -- Window Setup --
 WIDTH, HEIGHT = 1000,800
@@ -76,11 +77,17 @@ player_2_y = 400
 enemies = []
 enemy_width = 70
 enemy_height = 55
+
+# -- Load images --
 enemy_image = pygame.image.load("images/enemy_spaceship.png").convert_alpha()
 enemy_image = pygame.transform.scale(
     enemy_image,
     (enemy_width, enemy_height)
 )
+
+# -- Load sound effects --
+click_sound = pygame.mixer.Sound("sounds/click.wav")
+game_over_sound = pygame.mixer.Sound("sounds/game_over.wav")
 
 # -- Crosshair Variables --
 crosshair_width = 30
@@ -323,6 +330,9 @@ def add_score(name, mode, difficulty, score, misses):
     # Sort highest score first
     # lambda x: x["score"] - for each player, get their score
     leaderboard.sort(key=lambda x: x["score"], reverse=True)
+
+    # Only keep 10 highest scores on leaderboard
+    leaderboard = leaderboard[:10]
 
     # Saves updated list back to the JSON file
     save_leaderboard(leaderboard)
@@ -568,6 +578,11 @@ while running:
         y = 290
         position = 1
 
+        if len(single_scores) == 0:
+            no_scores_text = FONT.render("NO SCORES YET", True, WHITE)
+            no_scores_rect = no_scores_text.get_rect(center=(WIDTH // 2, 400))
+            SCREEN.blit(no_scores_text, no_scores_rect)
+
         for player in single_scores:
             position_text = FONT.render(
                 str(position),
@@ -687,6 +702,11 @@ while running:
         # Display scores
         y = 290
         position = 1
+
+        if len(two_player_scores) == 0:
+            no_scores_text = FONT.render("NO SCORES YET", True, WHITE)
+            no_scores_rect = no_scores_text.get_rect(center=(WIDTH // 2, 400))
+            SCREEN.blit(no_scores_text, no_scores_rect)
 
         for player in two_player_scores:
             position_text = FONT.render(
@@ -1279,38 +1299,60 @@ while running:
             # -- Main Menu buttons --
             if game_state == MENU:
                 if select_mode_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = MODE_SELECT
                 elif instructions_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = INSTRUCTIONS
                 elif leaderboard_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = LEADERBOARD
                 elif settings_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = SETTINGS
                 elif exit_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     running = False
 
             # -- Instructions buttons --
             elif game_state == INSTRUCTIONS:
                 if back_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = MENU
 
             # -- Leaderboard buttons --
             elif game_state == LEADERBOARD:
                 if single_leaderboard_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = SINGLE_LEADERBOARD
                 elif two_player_leaderboard_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = TWO_PLAYER_LEADERBOARD
                 elif back_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = MENU
 
             # -- Single Player Leaderboard buttons --
             elif game_state == SINGLE_LEADERBOARD:
                 if back_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = LEADERBOARD
 
             # -- 2-Player Leaderboard buttons --
             elif game_state == TWO_PLAYER_LEADERBOARD:
-                if back_button.collidpoint(event.pos):
+                if back_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = LEADERBOARD
 
             # -- Settings buttons --
@@ -1321,6 +1363,8 @@ while running:
                     sound_enabled = not sound_enabled
                 # Return to main menu
                 elif back_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = MENU
 
             # -- Mode selection buttons --
@@ -1334,6 +1378,8 @@ while running:
                     player_2_name = ""
                     current_input = None
                     difficulty = "Easy"
+                    if sound_enabled:
+                        click_sound.play()
 
                     game_state = PLAYER_SETUP
 
@@ -1346,10 +1392,14 @@ while running:
                     player_2_name = ""
                     current_input = None
                     difficulty = "Easy"
+                    if sound_enabled:
+                        click_sound.play()
 
                     game_state = PLAYER_SETUP
 
                 elif back_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = MENU
 
             # -- Player Setup buttons --
@@ -1365,6 +1415,8 @@ while running:
 
                 # -- Change difficulty --
                 elif difficulty_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     # Find current difficulty
                     current_index = difficulty_levels.index(difficulty)
                     # Move to next difficulty
@@ -1376,10 +1428,14 @@ while running:
                     difficulty = difficulty_levels[current_index]
 
                 elif game_mode == "single" and crosshair_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     player_1_crosshair = next_crosshair_colour(player_1_crosshair)
 
                 # Change Player 1's crosshair colour
                 elif game_mode == "two_player" and player_1_crosshair_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     new_colour = next_crosshair_colour(player_1_crosshair)
                     # Only change colour if Player 2 isn't already using it
                     if new_colour != player_2_crosshair:
@@ -1387,6 +1443,8 @@ while running:
 
                 # Change Player 2's crosshair colour
                 elif game_mode == "two_player" and player_2_crosshair_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     new_colour = next_crosshair_colour(player_2_crosshair)
                     # Only change colour if Player 1 isn't already using it
                     if new_colour != player_1_crosshair:
@@ -1394,6 +1452,8 @@ while running:
 
                 # Start the game
                 elif start_game_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     # Deactivate name input
                     current_input = None
                     # Reset scores
@@ -1434,17 +1494,23 @@ while running:
                     game_time = 60
                     # Record when game started
                     start_time = pygame.time.get_ticks()
+                    if sound_enabled:
+                        click_sound.play()
                     # Change to Game Screen
                     game_state = GAME
 
                 # Return to mode selection
                 elif back_button.collidepoint(event.pos):
                     current_input = None
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = MODE_SELECT
 
             # -- Game Over Screen Buttons --
             elif game_state == GAME_OVER:
                 if back_to_menu_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
                     game_state = MENU
 
 
