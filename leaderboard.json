@@ -7,6 +7,20 @@
         "misses": 22
     },
     {
+        "name": "john",
+        "mode": "single",
+        "difficulty": "Easy",
+        "score": 51,
+        "misses": 15
+    },
+    {
+        "name": "og",
+        "mode": "two_player",
+        "difficulty": "Medium",
+        "score": 24,
+        "misses": 38
+    },
+    {
         "name": "jo",
         "mode": "single",
         "difficulty": "Hard",
@@ -33,6 +47,13 @@
         "difficulty": "Medium",
         "score": 14,
         "misses": 9
+    },
+    {
+        "name": "test2",
+        "mode": "two_player",
+        "difficulty": "Medium",
+        "score": 11,
+        "misses": 40
     },
     {
         "name": "",

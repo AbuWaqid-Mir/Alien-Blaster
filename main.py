@@ -29,9 +29,9 @@ BUTTON_HOVER = (50,60,100)
 BUTTON_BORDER = (100,120,180)
 
 # -- Font --
-TITLE_FONT = pygame.font.SysFont(None,60)
-SCREEN_TITLE = pygame.font.SysFont(None, 50)
-FONT = pygame.font.SysFont(None, 30)
+TITLE_FONT = pygame.font.Font("font/Orbitron-Regular.ttf",60)
+SCREEN_TITLE = pygame.font.Font("font/Orbitron-Regular.ttf", 40)
+FONT = pygame.font.Font("font/Rajdhani-Regular.ttf", 30)
 
 # -- Game States --
 MENU = "menu"
@@ -86,6 +86,7 @@ enemy_image = pygame.transform.scale(
     enemy_image,
     (enemy_width, enemy_height)
 )
+background = pygame.image.load("images/background.png").convert()#
 
 # -- Load sound effects --
 click_sound = pygame.mixer.Sound("sounds/click.wav")
@@ -352,20 +353,20 @@ def add_score(name, mode, difficulty, score, misses):
 # -- Game Loop --
 running = True
 while running:
-    SCREEN.fill(BLACK)
-
+    SCREEN.blit(background, (0, 0))
     # -- Create menu --
     if game_state == MENU:
         SCREEN.fill(BLACK)
 
         # -- Draw main menu --
         TITLE = TITLE_FONT.render(
+
             "ALIEN  BLASTER",
             True,
             WHITE
         )
         title_rect = TITLE.get_rect(
-            center=(WIDTH // 2, 150)
+            center=(WIDTH // 2, 180)
         )
         SCREEN.blit(TITLE, title_rect)
 
@@ -827,7 +828,7 @@ while running:
             WHITE
         )
         title_rect = TITLE.get_rect(
-            center=(WIDTH // 2, 150)
+            center=(WIDTH // 2, 230)
         )
         SCREEN.blit(TITLE, title_rect)
 
@@ -872,12 +873,12 @@ while running:
                 WHITE
             )
             title_rect = TITLE.get_rect(
-                center=(WIDTH // 2, 100)
+                center=(WIDTH // 2, 160)
             )
             SCREEN.blit(TITLE, title_rect)
 
             # Create Player 1 name input box
-            player_1_input = pygame.Rect(350, 180, 300, 60)
+            player_1_input = pygame.Rect(350, 230, 300, 60)
 
             # Change border when input is active
             if current_input == "player_1":
@@ -902,7 +903,7 @@ while running:
             difficulty_button = draw_button(
                 "DIFFICULTY: " + difficulty.upper(),
                 350,
-                280,
+                320,
                 300,
                 60
             )
@@ -911,7 +912,7 @@ while running:
             crosshair_button = draw_button(
                 "CROSSHAIR: " + get_colour_name(player_1_crosshair),
                 350,
-                380,
+                420,
                 300,
                 60
             )
@@ -920,7 +921,7 @@ while running:
             # Draw Player 1's crosshair
             draw_crosshair(
                 player_1_x,
-                player_1_y,
+                420,
                 player_1_crosshair
             )
             # Draw Player 2's crosshair
@@ -936,12 +937,12 @@ while running:
                 WHITE
             )
             title_rect = TITLE.get_rect(
-                center=(WIDTH // 2, 120)
+                center=(WIDTH // 2, 140)
             )
             SCREEN.blit(TITLE, title_rect)
 
             # -- Create Player 1 name input box --
-            player_1_input = pygame.Rect(150, 200, 300, 60)
+            player_1_input = pygame.Rect(150, 230, 300, 60)
 
             # Change border when input is active
             if current_input == "player_1":
@@ -963,7 +964,7 @@ while running:
             SCREEN.blit(name_text, name_rect)
 
             # -- Create Player 2 name input box --
-            player_2_input = pygame.Rect(550, 200, 300, 60)
+            player_2_input = pygame.Rect(550, 230, 300, 60)
 
             # Change border when input is active
             if current_input == "player_2":
@@ -989,7 +990,7 @@ while running:
             player_1_crosshair_button = draw_button(
                 "P1 CROSSHAIR: " + get_colour_name(player_1_crosshair),
                 150,
-                300,
+                330,
                 300,
                 60
             )
@@ -998,7 +999,7 @@ while running:
             player_2_crosshair_button = draw_button(
                 "P2 CROSSHAIR: " + get_colour_name(player_2_crosshair),
                 550,
-                300,
+                330,
                 300,
                 60
             )
@@ -1007,7 +1008,7 @@ while running:
             difficulty_button = draw_button(
                 "DIFFICULTY: " + difficulty.upper(),
                 350,
-                400,
+                440,
                 300,
                 60
             )
@@ -1016,10 +1017,18 @@ while running:
         start_game_button = draw_button(
             "START GAME",
             350,
-            500,
+            540,
             300,
             60
         )
+
+        # Display name validation error
+        if name_error:
+            error_text = FONT.render(name_error, True, RED)
+            error_rect = error_text.get_rect(
+                center=(WIDTH // 2, 620)
+            )
+            SCREEN.blit(error_text, error_rect)
 
         # Back button
         back_button = draw_button(
@@ -1253,7 +1262,7 @@ while running:
             RED
         )
         game_over_rect = game_over_text.get_rect(
-            center=(WIDTH // 2, 100)
+            center=(WIDTH // 2, 160)
         )
         SCREEN.blit(game_over_text, game_over_rect)
 
@@ -1264,7 +1273,7 @@ while running:
             WHITE
         )
         difficulty_rect = difficulty_text.get_rect(
-            center=(WIDTH // 2, 180)
+            center=(WIDTH // 2, 240)
         )
         SCREEN.blit(difficulty_text, difficulty_rect)
 
@@ -1275,7 +1284,7 @@ while running:
             WHITE
         )
         player_1_score_rect = player_1_score_text.get_rect(
-            center=(WIDTH // 2, 250)
+            center=(WIDTH // 2, 320)
         )
         SCREEN.blit(player_1_score_text, player_1_score_rect)
 
@@ -1286,7 +1295,7 @@ while running:
             WHITE
         )
         player_1_misses_rect = player_1_misses_text.get_rect(
-            center=(WIDTH // 2, 300)
+            center=(WIDTH // 2, 370)
         )
         SCREEN.blit(player_1_misses_text, player_1_misses_rect)
 
@@ -1298,7 +1307,7 @@ while running:
                 WHITE
             )
             player_2_score_rect = player_2_score_text.get_rect(
-                center=(WIDTH // 2, 370)
+                center=(WIDTH // 2, 440)
             )
             SCREEN.blit(player_2_score_text, player_2_score_rect)
             player_2_misses_text = FONT.render(
@@ -1307,7 +1316,7 @@ while running:
                 WHITE
             )
             player_2_misses_rect = player_2_misses_text.get_rect(
-                center=(WIDTH // 2, 420)
+                center=(WIDTH // 2, 490)
             )
             SCREEN.blit(player_2_misses_text, player_2_misses_rect)
 
@@ -1444,11 +1453,13 @@ while running:
                 # Activate Player 1 name input
                 if player_1_input.collidepoint(event.pos):
                     current_input = "player_1"
+                    name_error = ""
 
                 # Activate Player 2 name input
                 # to ensure we're only using Player 2 box when in 2-player mode
                 elif game_mode == "two_player" and player_2_input.collidepoint(event.pos):
                     current_input = "player_2"
+                    name_error = ""
 
                 # -- Change difficulty --
                 elif difficulty_button.collidepoint(event.pos):
@@ -1489,53 +1500,72 @@ while running:
 
                 # Start the game
                 elif start_game_button.collidepoint(event.pos):
-                    if sound_enabled:
-                        click_sound.play()
-                    # Deactivate name input
-                    current_input = None
-                    # Reset scores
-                    player_1_score = 0
-                    player_2_score = 0
-                    # Reset misses
-                    player_1_misses = 0
-                    player_2_misses = 0
-                    # Reset crosshair positions
-                    player_1_x = 250
-                    player_1_y = 400
-                    player_2_x = 750
-                    player_2_y = 400
 
-                    # -- Create enemies based on difficulty --
-                    enemies = []
-                    # Find difficulty level, then it's enemy amount and speed
-                    enemy_amount = enemy_settings[difficulty]["amount"]
-                    enemy_speed = enemy_settings[difficulty]["speed"]
-                    # Check enemy count, then creates that many enemies
-                    for i in range(enemy_amount):
-                        # Random starting position
-                        enemy_x = random.randint(0, WIDTH - enemy_width)
-                        enemy_y = random.randint(100, HEIGHT - enemy_height)
-                        # Random movement direction
-                        velocity_x = random.choice([-enemy_speed, enemy_speed])
-                        velocity_y = random.choice([-enemy_speed, enemy_speed])
-                        # Create enemy
-                        enemy = create_enemy(
-                            enemy_x,
-                            enemy_y,
-                            velocity_x,
-                            velocity_y,
-                        )
-                        enemies.append(enemy)
+                    # Check if player has entered a name
+                    # .strip() - remove whitespace from start+end of string
+                    if game_mode == "single" and not player_1_name.strip():
+                        name_error = "PLEASE ENTER A NAME"
+                        current_input = "player_1"
 
-                    # Reset timer
-                    game_time = 60
-                    # Record when game started
-                    start_time = pygame.time.get_ticks()
-                    last_beep_time = None
-                    if sound_enabled:
-                        click_sound.play()
-                    # Change to Game Screen
-                    game_state = GAME
+                    # Check both names in 2-player mode
+                    elif game_mode == "two_player" and (
+                        not player_1_name.strip() or not player_2_name.strip()
+                    ):
+                        name_error = "BOTH PLAYERS MUST ENTER A NAME"
+
+                        if not player_1_name.strip():
+                            current_input = "player_1"
+                        else:
+                            current_input = "player_2"
+
+                    else:
+                        if sound_enabled:
+                            click_sound.play()
+                        # Deactivate name input
+                        current_input = None
+                        # Reset scores
+                        player_1_score = 0
+                        player_2_score = 0
+                        # Reset misses
+                        player_1_misses = 0
+                        player_2_misses = 0
+                        # Reset crosshair positions
+                        player_1_x = 250
+                        player_1_y = 400
+                        player_2_x = 750
+                        player_2_y = 400
+
+                        # -- Create enemies based on difficulty --
+                        enemies = []
+                        # Find difficulty level, then it's enemy amount and speed
+                        enemy_amount = enemy_settings[difficulty]["amount"]
+                        enemy_speed = enemy_settings[difficulty]["speed"]
+                        # Check enemy count, then creates that many enemies
+                        for i in range(enemy_amount):
+                            # Random starting position
+                            enemy_x = random.randint(0, WIDTH - enemy_width)
+                            enemy_y = random.randint(100, HEIGHT - enemy_height)
+                            # Random movement direction
+                            velocity_x = random.choice([-enemy_speed, enemy_speed])
+                            velocity_y = random.choice([-enemy_speed, enemy_speed])
+                            # Create enemy
+                            enemy = create_enemy(
+                                enemy_x,
+                                enemy_y,
+                                velocity_x,
+                                velocity_y,
+                            )
+                            enemies.append(enemy)
+
+                        # Reset timer
+                        game_time = 60
+                        # Record when game started
+                        start_time = pygame.time.get_ticks()
+                        last_beep_time = None
+                        if sound_enabled:
+                            click_sound.play()
+                        # Change to Game Screen
+                        game_state = GAME
 
                 # Return to mode selection
                 elif back_button.collidepoint(event.pos):
