@@ -1,3 +1,4 @@
+#
 import pygame
 import sys
 import random
@@ -29,9 +30,9 @@ BUTTON_HOVER = (50,60,100)
 BUTTON_BORDER = (100,120,180)
 
 # -- Font --
-TITLE_FONT = pygame.font.Font("font/Orbitron-Regular.ttf",60)
-SCREEN_TITLE = pygame.font.Font("font/Orbitron-Regular.ttf", 40)
-FONT = pygame.font.Font("font/Rajdhani-Regular.ttf", 30)
+TITLE_FONT = pygame.font.Font("fonts/Orbitron-Regular.ttf", 60)
+SCREEN_TITLE = pygame.font.Font("fonts/Orbitron-Regular.ttf", 40)
+FONT = pygame.font.Font("fonts/Rajdhani-Regular.ttf", 30)
 
 # -- Game States --
 MENU = "menu"

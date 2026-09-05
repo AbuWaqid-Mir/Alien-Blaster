@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fff0685b-4276-473e-890d-fe00f87e68db" name="Changes" comment="added sound effects">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/leaderboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/leaderboard.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="fff0685b-4276-473e-890d-fe00f87e68db" name="Changes" comment="added special fonts" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -212,7 +208,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788602748224</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="added special fonts">
+      <option name="closed" value="true" />
+      <created>1788622911760</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1788622911760</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -232,6 +236,7 @@
     <MESSAGE value="added click sound" />
     <MESSAGE value="?" />
     <MESSAGE value="added sound effects" />
-    <option name="LAST_COMMIT_MESSAGE" value="added sound effects" />
+    <MESSAGE value="added special fonts" />
+    <option name="LAST_COMMIT_MESSAGE" value="added special fonts" />
   </component>
 </project>
