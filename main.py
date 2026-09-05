@@ -10,7 +10,7 @@ pygame.mixer.init()
 # -- Window Setup --
 WIDTH, HEIGHT = 1000,800
 SCREEN = pygame.display.set_mode((WIDTH,HEIGHT))
-pygame.display.set_caption("Spaceship Shooter") # window title
+pygame.display.set_caption("ALIEN BLASTER") # window title
 
 # -- Control game's frame rate --
 clock = pygame.time.Clock()
@@ -57,6 +57,7 @@ difficulty = "Easy"
 player_1_crosshair = RED
 player_2_crosshair = BLUE
 current_input = None
+name_error = ""
 
 # -- Game Variables --
 player_1_score = 0
@@ -66,6 +67,7 @@ player_2_misses = 0
 game_time = 60
 start_time = 0
 crosshair_speed = 8
+last_beep_time = None
 
 # -- Player crosshair positions --
 player_1_x = 250
@@ -75,11 +77,11 @@ player_2_y = 400
 
 # -- Enemy Variables --
 enemies = []
-enemy_width = 70
-enemy_height = 55
+enemy_width = 100
+enemy_height = 110
 
 # -- Load images --
-enemy_image = pygame.image.load("images/enemy_spaceship.png").convert_alpha()
+enemy_image = pygame.image.load("images/enemy.png").convert_alpha()
 enemy_image = pygame.transform.scale(
     enemy_image,
     (enemy_width, enemy_height)
@@ -89,6 +91,8 @@ enemy_image = pygame.transform.scale(
 click_sound = pygame.mixer.Sound("sounds/click.wav")
 game_over_sound = pygame.mixer.Sound("sounds/game_over.wav")
 countdown_sound = pygame.mixer.Sound("sounds/beep_sound.wav")
+hit_sound = pygame.mixer.Sound("sounds/hit.wav")
+shoot_sound = pygame.mixer.Sound("sounds/shoot.wav")
 
 # -- Crosshair Variables --
 crosshair_width = 30
@@ -258,6 +262,9 @@ def spawn_enemy():
 
 # -- Shoot at enemy --
 def shoot(x, y, player):
+    # Play shooting sound
+    if sound_enabled:
+        shoot_sound.play()
     global player_1_score, player_2_score
     global player_1_misses, player_2_misses
 
@@ -287,6 +294,10 @@ def shoot(x, y, player):
                 player_1_score += 1
             elif player == 2:
                 player_2_score += 1
+
+            # Play hit sound
+            if sound_enabled:
+                hit_sound.play()
 
             # Stop checking enemies
             return
@@ -349,7 +360,7 @@ while running:
 
         # -- Draw main menu --
         TITLE = TITLE_FONT.render(
-            "SPACESHIP SHOOTER",
+            "ALIEN  BLASTER",
             True,
             WHITE
         )
@@ -880,7 +891,10 @@ while running:
             pygame.draw.rect(SCREEN, border_colour, player_1_input, 2)
 
             # Display Player 1's name
-            name_text = FONT.render(player_1_name, True, WHITE)
+            if player_1_name:
+                name_text = FONT.render(player_1_name, True, WHITE)
+            else:
+                name_text = FONT.render("ENTER NAME", True, BUTTON_BORDER)
             name_rect = name_text.get_rect(center=player_1_input.center)
             SCREEN.blit(name_text, name_rect)
 
@@ -941,7 +955,10 @@ while running:
             pygame.draw.rect(SCREEN, border_colour, player_1_input, 2)
 
             # Display Player 1's name
-            name_text = FONT.render(player_1_name, True, WHITE)
+            if player_1_name:
+                name_text = FONT.render(player_1_name, True, WHITE)
+            else:
+                name_text = FONT.render("ENTER NAME", True, BUTTON_BORDER)
             name_rect = name_text.get_rect(center=player_1_input.center)
             SCREEN.blit(name_text, name_rect)
 
@@ -961,7 +978,10 @@ while running:
             pygame.draw.rect(SCREEN, border_colour, player_2_input, 2)
 
             # Display Player 2's name
-            name_text = FONT.render(player_2_name, True, WHITE)
+            if player_2_name:
+                name_text = FONT.render(player_2_name, True, WHITE)
+            else:
+                name_text = FONT.render("ENTER NAME", True, BUTTON_BORDER)
             name_rect = name_text.get_rect(center=player_2_input.center)
             SCREEN.blit(name_text, name_rect)
 
@@ -1108,6 +1128,12 @@ while running:
             elapsed_time = (pygame.time.get_ticks() - start_time) // 1000
             # Calculate remaining game time
             game_time = 60 - elapsed_time
+            # Play last 10-second beep
+            if 1 <= game_time <= 10:
+                if game_time != last_beep_time:
+                    if sound_enabled:
+                        countdown_sound.play()
+                    last_beep_time = game_time
             # Prevent timer going below 0
             if game_time < 0:
                 game_time = 0
@@ -1169,6 +1195,12 @@ while running:
             elapsed_time = (pygame.time.get_ticks() - start_time) // 1000
             # Calculate remaining game time
             game_time = 60 - elapsed_time
+            # Play last 10-second beep
+            if 1 <= game_time <= 10:
+                if game_time != last_beep_time:
+                    if sound_enabled:
+                        countdown_sound.play()
+                    last_beep_time = game_time
             # Prevent timer going below 0
             if game_time < 0:
                 game_time = 0
@@ -1499,6 +1531,7 @@ while running:
                     game_time = 60
                     # Record when game started
                     start_time = pygame.time.get_ticks()
+                    last_beep_time = None
                     if sound_enabled:
                         click_sound.play()
                     # Change to Game Screen

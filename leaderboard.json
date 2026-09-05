@@ -1,5 +1,12 @@
 [
     {
+        "name": "",
+        "mode": "single",
+        "difficulty": "Easy",
+        "score": 111,
+        "misses": 22
+    },
+    {
         "name": "jo",
         "mode": "single",
         "difficulty": "Hard",
@@ -7,10 +14,31 @@
         "misses": 28
     },
     {
+        "name": "john",
+        "mode": "single",
+        "difficulty": "Hard",
+        "score": 18,
+        "misses": 11
+    },
+    {
+        "name": "",
+        "mode": "single",
+        "difficulty": "Easy",
+        "score": 18,
+        "misses": 6
+    },
+    {
         "name": "testing_player",
         "mode": "single",
         "difficulty": "Medium",
         "score": 14,
         "misses": 9
+    },
+    {
+        "name": "",
+        "mode": "single",
+        "difficulty": "Easy",
+        "score": 0,
+        "misses": 0
     }
 ]
