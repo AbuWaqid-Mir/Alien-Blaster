@@ -87,7 +87,11 @@ enemy_image = pygame.transform.scale(
     enemy_image,
     (enemy_width, enemy_height)
 )
-background = pygame.image.load("images/background.png").convert()#
+title = pygame.image.load("images/title.png").convert_alpha()
+title = pygame.transform.scale(
+    title,
+    (500,180)
+)
 
 # -- Load sound effects --
 click_sound = pygame.mixer.Sound("sounds/click.wav")
@@ -354,22 +358,15 @@ def add_score(name, mode, difficulty, score, misses):
 # -- Game Loop --
 running = True
 while running:
-    SCREEN.blit(background, (0, 0))
     # -- Create menu --
     if game_state == MENU:
         SCREEN.fill(BLACK)
 
         # -- Draw main menu --
-        TITLE = TITLE_FONT.render(
-
-            "ALIEN  BLASTER",
-            True,
-            WHITE
-        )
-        title_rect = TITLE.get_rect(
-            center=(WIDTH // 2, 180)
-        )
-        SCREEN.blit(TITLE, title_rect)
+        # Draw title
+        title_x = WIDTH // 2 - title.get_width() // 2
+        title_y = 50
+        SCREEN.blit(title, (title_x, title_y))
 
         select_mode_button = draw_button(
             "SELECT MODE",
