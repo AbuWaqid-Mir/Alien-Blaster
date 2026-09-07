@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fff0685b-4276-473e-890d-fe00f87e68db" name="Changes" comment="added special fonts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/background.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/background_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/title_image.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/leaderboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/leaderboard.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -238,7 +236,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788726431939</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="added special fonts">
+      <option name="closed" value="true" />
+      <created>1788798221245</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1788798221245</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

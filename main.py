@@ -59,6 +59,7 @@ player_1_crosshair = RED
 player_2_crosshair = BLUE
 current_input = None
 name_error = ""
+crosshair_error = ""
 
 # -- Game Variables --
 player_1_score = 0
@@ -916,18 +917,7 @@ while running:
             )
 
         elif game_mode == "two_player":
-            # Draw Player 1's crosshair
-            draw_crosshair(
-                player_1_x,
-                420,
-                player_1_crosshair
-            )
-            # Draw Player 2's crosshair
-            draw_crosshair(
-                player_2_x,
-                player_2_y,
-                player_2_crosshair
-            )
+
             # Draw title
             TITLE = SCREEN_TITLE.render(
                 "2 PLAYERS - SETUP",
@@ -1027,6 +1017,40 @@ while running:
                 center=(WIDTH // 2, 620)
             )
             SCREEN.blit(error_text, error_rect)
+
+        if crosshair_error:
+            # Create error box
+            error_box = pygame.Rect(
+                250,
+                610,
+                500,
+                60
+            )
+            pygame.draw.rect(
+                SCREEN,
+                BUTTON_COLOUR,
+                error_box,
+            )
+
+            # Draw error box border
+            pygame.draw.rect(
+                SCREEN,
+                RED,
+                error_box,
+                2
+            )
+            # Draw error message
+            error_text = FONT.render(
+                crosshair_error,
+                True,
+                RED
+            )
+            error_rect = error_text.get_rect(
+                center=error_box.center
+            )
+            SCREEN.blit(
+                error_text, error_rect
+            )
 
         # Back button
         back_button = draw_button(
@@ -1422,6 +1446,12 @@ while running:
                     player_2_name = ""
                     current_input = None
                     difficulty = "Easy"
+                    crosshair_error = ""
+
+                    # Reset Player 1 crosshair position
+                    player_1_x = 250
+                    player_1_y = 400
+
                     if sound_enabled:
                         click_sound.play()
 
@@ -1436,6 +1466,14 @@ while running:
                     player_2_name = ""
                     current_input = None
                     difficulty = "Easy"
+                    crosshair_error = ""
+
+                    # Reset both player crosshair positions
+                    player_1_x = 250
+                    player_1_y = 400
+                    player_2_x = 750
+                    player_2_y = 400
+
                     if sound_enabled:
                         click_sound.play()
 
@@ -1482,19 +1520,23 @@ while running:
                 elif game_mode == "two_player" and player_1_crosshair_button.collidepoint(event.pos):
                     if sound_enabled:
                         click_sound.play()
-                    new_colour = next_crosshair_colour(player_1_crosshair)
-                    # Only change colour if Player 2 isn't already using it
-                    if new_colour != player_2_crosshair:
-                        player_1_crosshair = new_colour
+
+                    # Allow Player 1 to cycle through every colour
+                    player_1_crosshair = next_crosshair_colour(player_1_crosshair)
+
+                    # Clear crosshair error once a colour's changed
+                    crosshair_error = ""
 
                 # Change Player 2's crosshair colour
                 elif game_mode == "two_player" and player_2_crosshair_button.collidepoint(event.pos):
                     if sound_enabled:
                         click_sound.play()
-                    new_colour = next_crosshair_colour(player_2_crosshair)
-                    # Only change colour if Player 1 isn't already using it
-                    if new_colour != player_1_crosshair:
-                        player_2_crosshair = new_colour
+
+                    # Allow Player 2 to cycle through every colour
+                    player_2_crosshair = next_crosshair_colour(player_2_crosshair)
+
+                    # Clear the crosshair error once a colour is changed
+                    crosshair_error = ""
 
                 # Start the game
                 elif start_game_button.collidepoint(event.pos):
@@ -1515,6 +1557,10 @@ while running:
                             current_input = "player_1"
                         else:
                             current_input = "player_2"
+
+                    # Check that both players have different crosshair colours
+                    elif game_mode == "two_player" and player_1_crosshair == player_2_crosshair:
+                        crosshair_error = "PLAYER CROSSHAIRS MUST BE DIFFERENT"
 
                     else:
                         if sound_enabled:
