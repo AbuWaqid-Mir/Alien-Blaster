@@ -346,12 +346,27 @@ def add_score(name, mode, difficulty, score, misses):
     # Add that result to "new_score"
     leaderboard.append(new_score)
 
+    # Separate scores by game mode
+    single_scores = []
+    two_player_scores = []
+
+    for player in leaderboard:
+        if player["mode"] == "single":
+            single_scores.append(player)
+        elif player["mode"] == "two_player":
+            two_player_scores.append(player)
+
     # Sort highest score first
     # lambda x: x["score"] - for each player, get their score
-    leaderboard.sort(key=lambda x: x["score"], reverse=True)
+    single_scores.sort(key=lambda x: x["score"], reverse=True)
+    two_player_scores.sort(key=lambda x: x["score"], reverse=True)
 
-    # Only keep 10 highest scores on leaderboard
-    leaderboard = leaderboard[:10]
+    # Only keep 5 highest scores on leaderboard
+    single_scores = single_scores[:5]
+    two_player_scores = two_player_scores[:5]
+
+    # Combine both leaderboards
+    leaderboard = single_scores + two_player_scores
 
     # Saves updated list back to the JSON file
     save_leaderboard(leaderboard)
