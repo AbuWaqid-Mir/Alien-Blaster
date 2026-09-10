@@ -1,4 +1,4 @@
-
+# CISCO
 import pygame
 import sys
 import random
@@ -37,6 +37,8 @@ FONT = pygame.font.Font("fonts/Rajdhani-Regular.ttf", 30)
 # -- Game States --
 MENU = "menu"
 INSTRUCTIONS = "instructions"
+SINGLE_INSTRUCTIONS = "single_instructions"
+TWO_PLAYER_INSTRUCTIONS = "two_player_instructions"
 LEADERBOARD = "leaderboard"
 SINGLE_LEADERBOARD = "single_leaderboard"
 TWO_PLAYER_LEADERBOARD = "two_player_leaderboard"
@@ -440,62 +442,21 @@ while running:
         )
         SCREEN.blit(TITLE, title_rect)
 
-        # Instructions
-        single_player_instructions = [
-            "SINGLE PLAYER",
-            "",
-            "Move your crosshair",
-            "using the mouse.",
-            "",
-            "Left-click to shoot",
-            "Hit enemy spaceships.",
-            "to increase your score.",
-        ]
+        single_instructions_button = draw_button(
+            "SINGLE PLAYER INSTRUCTIONS",
+            280,
+            280,
+            450,
+            60
+        )
 
-        two_player_instructions = [
-            "2 PLAYERS",
-            "",
-            "Player 1:",
-            "WASD to move",
-            "SPACE to shoot.",
-            "",
-            "Player 2",
-            "ARROW KEYS to move",
-            "ENTER to shoot.",
-        ]
-
-        # Display Single Player instructions
-        y = 240
-        for line in single_player_instructions:
-            text = FONT.render(line, True, WHITE)
-            text_rect = text.get_rect(
-                center=(250, y)
-            )
-            SCREEN.blit(text, text_rect)
-            y += 35
-
-        # Display 2 Player instructions
-        y = 220
-        for line in two_player_instructions:
-            text = FONT.render(line, True, WHITE)
-            text_rect = text.get_rect(
-                center=(750, y)
-            )
-            SCREEN.blit(text, text_rect)
-            y += 35
-
-        # Display time limit
-        y = 580
-        time_limit = [
-            "You have 60 seconds to get the highest score.",
-        ]
-        for line in time_limit:
-            text = FONT.render(line, True, RED)
-            text_rect = text.get_rect(
-                center=(500, y)
-            )
-            SCREEN.blit(text, text_rect)
-            y += 35
+        two_player_instructions_button = draw_button(
+            "TWO PLAYER INSTRUCTIONS",
+            300,
+            380,
+            400,
+            60
+        )
 
         # Draw back button
         back_button = draw_button(
@@ -548,7 +509,119 @@ while running:
             50
         )
 
-    # -- Single Player Leaderboard --
+    # -- Single Player Instructions --
+    elif game_state == SINGLE_INSTRUCTIONS:
+        SCREEN.fill(BLACK)
+
+        TITLE = SCREEN_TITLE.render(
+            "SINGLE PLAYER INSTRUCTIONS",
+            True,
+            WHITE
+        )
+        title_rect = TITLE.get_rect(
+            center=(WIDTH // 2, 150)
+        )
+        SCREEN.blit(TITLE, title_rect)
+        # Instructions
+        single_player_instructions = [
+            "Move your crosshair",
+            "using the mouse.",
+            "",
+            "Left-click to shoot",
+            "Hit enemies",
+            "to increase your score.",
+        ]
+
+        # Display Single Player instructions
+        y = 240
+        for line in single_player_instructions:
+            text = FONT.render(line, True, WHITE)
+            text_rect = text.get_rect(
+                center=(500, y)
+            )
+            SCREEN.blit(text, text_rect)
+            y += 45
+
+        # Display time limit
+        y = 580
+        time_limit = [
+            "You have 60 seconds to get the highest score.",
+        ]
+        for line in time_limit:
+            text = FONT.render(line, True, RED)
+            text_rect = text.get_rect(
+                center=(500, y)
+            )
+            SCREEN.blit(text, text_rect)
+            y += 45
+
+        # Back button
+        back_button = draw_button(
+            "BACK",
+            50,
+            700,
+            150,
+            50
+        )
+
+    elif game_state == TWO_PLAYER_INSTRUCTIONS:
+        SCREEN.fill(BLACK)
+
+        TITLE = SCREEN_TITLE.render(
+            "TWO PLAYER INSTRUCTIONS",
+            True,
+            WHITE
+        )
+        title_rect = TITLE.get_rect(
+            center=(WIDTH // 2, 150)
+        )
+        SCREEN.blit(TITLE, title_rect)
+
+        two_player_instructions = [
+            "Player 1:",
+            "WASD to move",
+            "SPACE to shoot.",
+            "",
+            "Player 2",
+            "ARROW KEYS to move",
+            "ENTER to shoot.",
+            "",
+            "HIT AS MANY ENEMIES",
+            "AS YOU CAN TO WIN"
+        ]
+
+        # Display 2 Player instructions
+        y = 220
+        for line in two_player_instructions:
+            text = FONT.render(line, True, WHITE)
+            text_rect = text.get_rect(
+                center=(500, y)
+            )
+            SCREEN.blit(text, text_rect)
+            y += 35
+
+        # Display time limit
+        y = 600
+        time_limit = [
+            "You have 60 seconds to see who can get the highest score.",
+        ]
+        for line in time_limit:
+            text = FONT.render(line, True, RED)
+            text_rect = text.get_rect(
+                center=(500, y)
+            )
+            SCREEN.blit(text, text_rect)
+            y += 45
+
+        # Back button
+        back_button = draw_button(
+        "BACK",
+        50,
+        700,
+        150,
+        50
+        )
+
     elif game_state == SINGLE_LEADERBOARD:
         SCREEN.fill(BLACK)
 
@@ -1038,7 +1111,7 @@ while running:
             error_box = pygame.Rect(
                 250,
                 610,
-                500,
+                550,
                 60
             )
             pygame.draw.rect(
@@ -1404,7 +1477,15 @@ while running:
 
             # -- Instructions buttons --
             elif game_state == INSTRUCTIONS:
-                if back_button.collidepoint(event.pos):
+                if single_instructions_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
+                    game_state = SINGLE_INSTRUCTIONS
+                elif two_player_instructions_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
+                    game_state = TWO_PLAYER_INSTRUCTIONS
+                elif back_button.collidepoint(event.pos):
                     if sound_enabled:
                         click_sound.play()
                     game_state = MENU
@@ -1423,6 +1504,20 @@ while running:
                     if sound_enabled:
                         click_sound.play()
                     game_state = MENU
+
+            # -- Single Player Instructions buttons --
+            elif game_state == SINGLE_INSTRUCTIONS:
+                if back_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
+                    game_state = INSTRUCTIONS
+
+            # -- 2-Player Instructions buttons --
+            elif game_state == TWO_PLAYER_INSTRUCTIONS:
+                if back_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
+                    game_state = INSTRUCTIONS
 
             # -- Single Player Leaderboard buttons --
             elif game_state == SINGLE_LEADERBOARD:
