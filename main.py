@@ -1,4 +1,3 @@
-# -- Import libraries --
 import pygame
 import sys
 import random
@@ -95,6 +94,9 @@ title = pygame.transform.scale(
     title,
     (500,180)
 )
+background = pygame.image.load("images/background.png")
+background_2 = pygame.image.load("images/background_2.png")
+
 
 # -- Load sound effects --
 click_sound = pygame.mixer.Sound("sounds/click.wav")
@@ -378,7 +380,7 @@ running = True
 while running:
     # -- Create menu --
     if game_state == MENU:
-        SCREEN.fill(BLACK)
+        SCREEN.blit(background, (0,0))
 
         # -- Draw main menu --
         # Draw title
@@ -429,7 +431,7 @@ while running:
 
     # -- Create instructions screen --
     elif game_state == INSTRUCTIONS:
-        SCREEN.fill(BLACK)
+        SCREEN.blit(background, (0,0))
 
         # Draw title
         TITLE = SCREEN_TITLE.render(
@@ -469,7 +471,7 @@ while running:
 
     # -- Create leaderboard screen --
     elif game_state == LEADERBOARD:
-        SCREEN.fill(BLACK)
+        SCREEN.blit(background, (0,0))
 
         # Draw title
         TITLE = SCREEN_TITLE.render(
@@ -511,7 +513,7 @@ while running:
 
     # -- Single Player Instructions --
     elif game_state == SINGLE_INSTRUCTIONS:
-        SCREEN.fill(BLACK)
+        SCREEN.blit(background_2, (0,0))
 
         TITLE = SCREEN_TITLE.render(
             "SINGLE PLAYER INSTRUCTIONS",
@@ -565,7 +567,7 @@ while running:
         )
 
     elif game_state == TWO_PLAYER_INSTRUCTIONS:
-        SCREEN.fill(BLACK)
+        SCREEN.blit(background_2, (0,0))
 
         TITLE = SCREEN_TITLE.render(
             "TWO PLAYER INSTRUCTIONS",
@@ -623,7 +625,7 @@ while running:
         )
 
     elif game_state == SINGLE_LEADERBOARD:
-        SCREEN.fill(BLACK)
+        SCREEN.blit(background_2, (0,0))
 
         # Draw title
         TITLE = SCREEN_TITLE.render(
@@ -748,7 +750,7 @@ while running:
 
     # -- 2-Player Leaderboard --
     elif game_state == TWO_PLAYER_LEADERBOARD:
-        SCREEN.fill(BLACK)
+        SCREEN.blit(background_2, (0,0))
 
         # Draw title
         TITLE = SCREEN_TITLE.render(
@@ -873,7 +875,7 @@ while running:
 
     # -- Create settings screen --
     elif game_state == SETTINGS:
-        SCREEN.fill(BLACK)
+        SCREEN.blit(background, (0,0))
 
         # Draw title
         TITLE = SCREEN_TITLE.render(
@@ -906,7 +908,7 @@ while running:
 
     # -- Mode Selection Screen --
     elif game_state == MODE_SELECT:
-        SCREEN.fill(BLACK)
+        SCREEN.blit(background, (0,0))
 
         # Draw title
         TITLE = SCREEN_TITLE.render(
@@ -946,7 +948,7 @@ while running:
 
     # -- Player Setup Screen --
     elif game_state == PLAYER_SETUP:
-        SCREEN.fill((20,20,40))
+        SCREEN.blit(background_2, (0,0))
 
         # -- Draw player setup buttons --
 
