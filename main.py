@@ -94,9 +94,14 @@ title = pygame.transform.scale(
     title,
     (500,180)
 )
+menu_background = pygame.image.load("images/main_menu_background.png")
+menu_background_image = pygame.transform.scale(menu_background, (WIDTH,HEIGHT))
 background = pygame.image.load("images/background.png")
+background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 background_2 = pygame.image.load("images/background_2.png")
-
+background_2_image = pygame.transform.scale(background_2, (WIDTH,HEIGHT))
+setup_background = pygame.image.load("images/setup_background.png")
+setup_background = pygame.transform.scale(setup_background, (WIDTH, HEIGHT))
 
 # -- Load sound effects --
 click_sound = pygame.mixer.Sound("sounds/click.wav")
@@ -380,18 +385,17 @@ running = True
 while running:
     # -- Create menu --
     if game_state == MENU:
-        SCREEN.blit(background, (0,0))
-
+        SCREEN.blit(menu_background,(0,0))
         # -- Draw main menu --
         # Draw title
         title_x = WIDTH // 2 - title.get_width() // 2
-        title_y = 50
+        title_y = 100
         SCREEN.blit(title, (title_x, title_y))
 
         select_mode_button = draw_button(
             "SELECT MODE",
             350,
-            250,
+            300,
             300,
             60
         )
@@ -399,7 +403,7 @@ while running:
         instructions_button = draw_button(
             "HOW TO PLAY",
             350,
-            330,
+            380,
             300,
             60
         )
@@ -407,7 +411,7 @@ while running:
         leaderboard_button = draw_button(
             "LEADERBOARD",
             350,
-            410,
+            460,
             300,
             60
         )
@@ -415,7 +419,7 @@ while running:
         settings_button = draw_button(
             "SETTINGS",
             350,
-            490,
+            540,
             300,
             60
         )
@@ -423,7 +427,7 @@ while running:
         exit_button = draw_button(
             "EXIT",
             350,
-            570,
+            620,
             300,
             60
         )
@@ -440,14 +444,14 @@ while running:
             WHITE
         )
         title_rect = TITLE.get_rect(
-            center=(WIDTH // 2, 150)
+            center=(WIDTH // 2, 270)
         )
         SCREEN.blit(TITLE, title_rect)
 
         single_instructions_button = draw_button(
             "SINGLE PLAYER INSTRUCTIONS",
             280,
-            280,
+            320,
             450,
             60
         )
@@ -455,7 +459,7 @@ while running:
         two_player_instructions_button = draw_button(
             "TWO PLAYER INSTRUCTIONS",
             300,
-            380,
+            400,
             400,
             60
         )
@@ -917,7 +921,7 @@ while running:
             WHITE
         )
         title_rect = TITLE.get_rect(
-            center=(WIDTH // 2, 230)
+            center=(WIDTH // 2, 280)
         )
         SCREEN.blit(TITLE, title_rect)
 
@@ -925,7 +929,7 @@ while running:
         single_player_button = draw_button(
             "SINGLE PLAYER",
             350,
-            300,
+            330,
             300,
             60
         )
@@ -933,7 +937,7 @@ while running:
         two_player_button = draw_button(
             "2 PLAYERS",
             350,
-            380,
+            410,
             300,
             60
         )
@@ -948,8 +952,7 @@ while running:
 
     # -- Player Setup Screen --
     elif game_state == PLAYER_SETUP:
-        SCREEN.blit(background_2, (0,0))
-
+        SCREEN.blit(setup_background, (0,0))
         # -- Draw player setup buttons --
 
         # Player 1 name button
@@ -1145,8 +1148,8 @@ while running:
         # Back button
         back_button = draw_button(
             "BACK",
-            50,
-            700,
+            85,
+            670,
             150,
             50
         )
