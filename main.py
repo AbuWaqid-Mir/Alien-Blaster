@@ -84,23 +84,23 @@ enemy_width = 100
 enemy_height = 110
 
 # -- Load images --
-enemy_image = pygame.image.load("images/enemy.png").convert_alpha()
+enemy_image = pygame.image.load("enemy.png").convert_alpha()
 enemy_image = pygame.transform.scale(
     enemy_image,
     (enemy_width, enemy_height)
 )
-title = pygame.image.load("images/title.png").convert_alpha()
+title = pygame.image.load("title.png").convert_alpha()
 title = pygame.transform.scale(
     title,
     (500,180)
 )
-menu_background = pygame.image.load("images/main_menu_background.png")
+menu_background = pygame.image.load("main_menu_background.png")
 menu_background_image = pygame.transform.scale(menu_background, (WIDTH,HEIGHT))
-background = pygame.image.load("images/background.png")
+background = pygame.image.load("background.png")
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))
-background_2 = pygame.image.load("images/background_2.png")
+background_2 = pygame.image.load("background_2.png")
 background_2_image = pygame.transform.scale(background_2, (WIDTH,HEIGHT))
-setup_background = pygame.image.load("images/setup_background.png")
+setup_background = pygame.image.load("setup_background.png")
 setup_background = pygame.transform.scale(setup_background, (WIDTH, HEIGHT))
 
 # -- Load sound effects --
