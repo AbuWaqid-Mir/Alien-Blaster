@@ -83,6 +83,9 @@ enemies = []
 enemy_width = 100
 enemy_height = 110
 
+# -- Enemy Particle Effects --
+particles = []
+
 # -- Load images --
 enemy_image = pygame.image.load("images/enemy.png").convert_alpha()
 enemy_image = pygame.transform.scale(
@@ -109,6 +112,7 @@ game_over_sound = pygame.mixer.Sound("sounds/game_over.wav")
 countdown_sound = pygame.mixer.Sound("sounds/beep_sound.wav")
 hit_sound = pygame.mixer.Sound("sounds/hit.wav")
 shoot_sound = pygame.mixer.Sound("sounds/shoot.wav")
+error_sound = pygame.mixer.Sound("sounds/error.wav")
 
 # -- Crosshair Variables --
 crosshair_width = 30
@@ -276,6 +280,68 @@ def spawn_enemy():
         velocity_y
     )
 
+# -- Create enemy explosion particles --
+def create_enemy_particles(enemy):
+    # Get enemy position
+    enemy_x = enemy["x"]
+    enemy_y = enemy["y"]
+
+    # How many particles to create
+    particle_size = 5
+
+    # Go through the enemy image in small sections
+    for x in range(0, enemy_width, particle_size):
+        for y in range(0, enemy_height, particle_size):
+            # Get the colour of this part of the enemy image
+            colour = enemy_image.get_at((x,y))
+
+            # Ignore transparent parts of the PNG
+            if colour.a > 0:
+                # Random direction for the particle
+                velocity_x = random.uniform(-5, 5)
+                velocity_y = random.uniform(-5, 5)
+
+                particles.append({
+                    "x": enemy_x + x,
+                    "y": enemy_y + y,
+                    "velocity_x": velocity_x,
+                    "velocity_y": velocity_y,
+                    "size": particle_size,
+                    "life": 35,
+                    "colour": colour
+                })
+
+# -- Update enemy particles --
+def update_enemy_particles():
+    for particle in particles[:]:
+
+        # Move particle
+        particle["x"] += particle["velocity_x"]
+        particle["y"] += particle["velocity_y"]
+
+        # Gravity
+        particle["velocity_y"] += 0.15
+
+        # Reduce particle lifetime
+        particle["life"] -= 1
+
+        # Draw particle
+        pygame.draw.rect(
+            SCREEN,
+            particle["colour"],
+            (
+                int(particle["x"]),
+                int(particle["y"]),
+                particle["size"],
+                particle["size"]
+            )
+        )
+
+        # Remove particle when it disappears
+        if particle["life"] <= 0:
+            particles.remove(particle)
+
+
 # -- Shoot at enemy --
 def shoot(x, y, player):
     # Play shooting sound
@@ -303,6 +369,8 @@ def shoot(x, y, player):
 
         # Check if crosshair hit enemy
         if crosshair_rect.colliderect(enemy_rect):
+            # Create explosion from enemy image
+            create_enemy_particles(enemy)
             enemies.remove(enemy)
             enemies.append(spawn_enemy())
 
@@ -1193,8 +1261,6 @@ while running:
             )
 
         for enemy in enemies:
-            # Create enemy rectangle
-
 
             # Draw enemy
             SCREEN.blit(
@@ -1213,6 +1279,9 @@ while running:
             # Bounce off top and bottom
             if enemy["y"] <= 0 or enemy["y"] + enemy_height >= HEIGHT:
                 enemy["velocity_y"] *= -1
+
+        # Update enemy explosion particles
+        update_enemy_particles()
 
         # -- Draw crosshair --
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -1659,6 +1728,8 @@ while running:
                     # Check if player has entered a name
                     # .strip() - remove whitespace from start+end of string
                     if game_mode == "single" and not player_1_name.strip():
+                        if sound_enabled:
+                            error_sound.play()
                         name_error = "PLEASE ENTER A NAME"
                         current_input = "player_1"
 
@@ -1666,6 +1737,8 @@ while running:
                     elif game_mode == "two_player" and (
                         not player_1_name.strip() or not player_2_name.strip()
                     ):
+                        if sound_enabled:
+                            error_sound.play()
                         name_error = "BOTH PLAYERS MUST ENTER A NAME"
 
                         if not player_1_name.strip():
@@ -1675,6 +1748,8 @@ while running:
 
                     # Check that both players have different crosshair colours
                     elif game_mode == "two_player" and player_1_crosshair == player_2_crosshair:
+                        if sound_enabled:
+                            error_sound.play()
                         crosshair_error = "PLAYER CROSSHAIRS MUST BE DIFFERENT"
 
                     else:
