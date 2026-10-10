@@ -146,27 +146,53 @@ crosshair_colours = [RED, BLUE, GREEN, YELLOW]
 # -- Create a Reusable Button --
 def draw_button(text, x, y, WIDTH, HEIGHT):
     mouse_pos = pygame.mouse.get_pos()
-
-    # Create button rectangle
     button_rect = pygame.Rect(x, y, WIDTH, HEIGHT)
 
-    # Check if mouse's hovering over button
-    if button_rect.collidepoint(mouse_pos):
-        colour = BUTTON_HOVER
+    hovered = button_rect.collidepoint(mouse_pos)
+
+    # Set button colours depending on if mouse's hovering over it
+    if hovered:
+        colour = (55,35,100)
+        border_colour = (210,100,255)
     else:
-        colour = BUTTON_COLOUR
+        colour = (25,25,50)
+        border_colour = (115,85,220)
 
-    # Draw button & button border
-    pygame.draw.rect(SCREEN, colour, button_rect)
-    pygame.draw.rect(SCREEN, BUTTON_BORDER, button_rect, 2)
+    # Highlight button when mouse hovers over it
+    if hovered:
+        glow_rect = button_rect.inflate(10,10)
+        pygame.draw.rect(
+            SCREEN,
+            (65, 35, 110),
+            glow_rect,
+            border_radius=12
+        )
 
-    # Create button text & centre inside button
+    # Draw the button background
+    pygame.draw.rect(
+        SCREEN,
+        colour,
+        button_rect,
+        border_radius=8
+    )
+
+    # Draw the button border
+    pygame.draw.rect(
+        SCREEN,
+        border_colour,
+        button_rect,
+        width=2,
+        border_radius=8
+    )
+
+    # Display the button text in the centre
     text_surface = FONT.render(text, True, WHITE)
-    text_rect = text_surface.get_rect(center=button_rect.center)
-
-    # Draw text onto screen
+    text_rect = text_surface.get_rect(
+        center=button_rect.center
+    )
     SCREEN.blit(text_surface, text_rect)
 
+    # Return the button area for detecting mouse clicks
     return button_rect
 
 # -- Get next crosshair colour --
@@ -394,12 +420,12 @@ def shoot(x, y, player):
 
 # -- Load leaderboard data --
 def load_leaderboard():
-    try:
-        # Open "leaderboard.json" & convert the JSON into a Python list
-        with open("leaderboard.json", "r") as file:
+    # Open "leaderboard.json" & convert the JSON into a Python list
+    with open("leaderboard.json", "r") as file:
+        try:
             return json.load(file)
-    except FileNotFoundError:
-        return[]
+        except json.JSONDecodeError or FileNotFoundError:
+            return[]
 
 # -- Save leaderboard data --
 def save_leaderboard(leaderboard):
@@ -447,6 +473,7 @@ def add_score(name, mode, difficulty, score, misses):
 
     # Saves updated list back to the JSON file
     save_leaderboard(leaderboard)
+
 
 # -- Game Loop --
 running = True
@@ -710,6 +737,34 @@ while running:
         )
         SCREEN.blit(TITLE, title_rect)
 
+        # Table background
+        table_rect = pygame.Rect(
+            50,
+            210,
+            900,
+            350
+        )
+
+        pygame.draw.rect(
+            SCREEN,
+            BUTTON_COLOUR,
+            table_rect
+        )
+        pygame.draw.rect(
+            SCREEN,
+            BUTTON_BORDER,
+            table_rect,
+            2
+        )
+
+        # Draw a line underneath the headings
+        pygame.draw.line(
+            SCREEN,
+            BUTTON_BORDER,
+            (50, 265),
+            (950, 265)
+        )
+
         # Load leaderboard
         leaderboard = load_leaderboard()
 
@@ -735,7 +790,7 @@ while running:
             "MISSES"
         ]
 
-        heading_x = [70, 200, 450, 700, 850]
+        heading_x = [90, 230, 450, 680, 850]
 
         for i in range(len(headings)):
             text = FONT.render(
@@ -765,7 +820,7 @@ while running:
             )
             SCREEN.blit(
                 position_text,
-                position_text.get_rect(center=(70, y))
+                position_text.get_rect(center=(90, y))
             )
 
             name_text = FONT.render(
@@ -775,7 +830,7 @@ while running:
             )
             SCREEN.blit(
                 name_text,
-                name_text.get_rect(center=(210, y))
+                name_text.get_rect(center=(230, y))
             )
 
             difficulty_text = FONT.render(
@@ -795,7 +850,7 @@ while running:
             )
             SCREEN.blit(
                 score_text,
-                score_text.get_rect(center=(700, y))
+                score_text.get_rect(center=(680, y))
             )
 
             misses_text = FONT.render(
@@ -835,6 +890,36 @@ while running:
         )
         SCREEN.blit(TITLE, title_rect)
 
+        # Table background
+        table_rect = pygame.Rect(
+            50,
+            210,
+            900,
+            350
+        )
+
+        pygame.draw.rect(
+            SCREEN,
+            BUTTON_COLOUR,
+            table_rect
+        )
+
+        pygame.draw.rect(
+            SCREEN,
+            BUTTON_BORDER,
+            table_rect,
+            2
+        )
+
+        # Line underneath headings
+        pygame.draw.line(
+            SCREEN,
+            BUTTON_BORDER,
+            (50, 265),
+            (950, 265),
+            2
+        )
+
         # Load leaderboard
         leaderboard = load_leaderboard()
 
@@ -860,7 +945,7 @@ while running:
             "MISSES"
         ]
 
-        heading_x = [50, 150, 400, 650, 800]
+        heading_x = [90, 230, 450, 680, 850]
 
         for i in range(len(headings)):
             text = FONT.render(
@@ -890,7 +975,7 @@ while running:
             )
             SCREEN.blit(
                 position_text,
-                position_text.get_rect(center=(50, y))
+                position_text.get_rect(center=(90, y))
             )
 
             name_text = FONT.render(
@@ -900,7 +985,7 @@ while running:
             )
             SCREEN.blit(
                 name_text,
-                name_text.get_rect(center=(150, y))
+                name_text.get_rect(center=(230, y))
             )
 
             difficulty_text = FONT.render(
@@ -910,7 +995,7 @@ while running:
             )
             SCREEN.blit(
                 difficulty_text,
-                difficulty_text.get_rect(center=(400, y))
+                difficulty_text.get_rect(center=(450, y))
             )
 
             score_text = FONT.render(
@@ -920,7 +1005,7 @@ while running:
             )
             SCREEN.blit(
                 score_text,
-                score_text.get_rect(center=(650, y))
+                score_text.get_rect(center=(680, y))
             )
 
             misses_text = FONT.render(
@@ -930,7 +1015,7 @@ while running:
             )
             SCREEN.blit(
                 misses_text,
-                misses_text.get_rect(center=(800, y))
+                misses_text.get_rect(center=(850, y))
             )
 
             y += 45
@@ -1148,7 +1233,7 @@ while running:
             player_2_crosshair_button = draw_button(
                 "P2 CROSSHAIR: " + get_colour_name(player_2_crosshair),
                 550,
-                330,
+                350,
                 300,
                 60
             )
@@ -1437,16 +1522,16 @@ while running:
 
     # -- Game Over Screen --
     elif game_state == GAME_OVER:
-        SCREEN.fill(BLACK)
+        SCREEN.blit(background_2_image, (0, 0))
 
         # Draw Game Over title
-        game_over_text = FONT.render(
+        game_over_text = SCREEN_TITLE.render(
             "GAME OVER",
             True,
             RED
         )
         game_over_rect = game_over_text.get_rect(
-            center=(WIDTH // 2, 160)
+            center=(WIDTH // 2, 130)
         )
         SCREEN.blit(game_over_text, game_over_rect)
 
@@ -1457,58 +1542,220 @@ while running:
             WHITE
         )
         difficulty_rect = difficulty_text.get_rect(
-            center=(WIDTH // 2, 240)
+            center=(WIDTH // 2, 200)
         )
         SCREEN.blit(difficulty_text, difficulty_rect)
 
-        # Display Player 1 Score
-        player_1_score_text = FONT.render(
-            player_1_name + " - SCORE: " + str(player_1_score),
-            True,
-            WHITE
-        )
-        player_1_score_rect = player_1_score_text.get_rect(
-            center=(WIDTH // 2, 320)
-        )
-        SCREEN.blit(player_1_score_text, player_1_score_rect)
+        # -- Single-player results --
+        if game_mode == "single":
 
-        # Display Player 1 misses
-        player_1_misses_text = FONT.render(
-            "MISSES: " + str(player_1_misses),
-            True,
-            WHITE
-        )
-        player_1_misses_rect = player_1_misses_text.get_rect(
-            center=(WIDTH // 2, 370)
-        )
-        SCREEN.blit(player_1_misses_text, player_1_misses_rect)
+            # Create score box
+            score_box = pygame.Rect(
+                250,
+                260,
+                500,
+                250
+            )
 
-        # Display Player 2 information
-        if game_mode == "two_player":
-            player_2_score_text = FONT.render(
-                player_2_name + " - SCORE: " + str(player_2_score),
+            # Draw score box background
+            pygame.draw.rect(
+                SCREEN,
+                BUTTON_COLOUR,
+                score_box,
+                border_radius=12
+            )
+
+            # Draw score box border
+            pygame.draw.rect(
+                SCREEN,
+                BUTTON_BORDER,
+                score_box,
+                3,
+                border_radius=12
+            )
+
+            # Display player name
+            player_name_text = FONT.render(
+                player_1_name.upper(),
                 True,
                 WHITE
             )
+            player_name_rect = player_name_text.get_rect(
+                center=(WIDTH // 2, 310)
+            )
+            SCREEN.blit(player_name_text, player_name_rect)
+
+            # Display final score
+            player_score_text = FONT.render(
+                "SCORE: " + str(player_1_score),
+                True,
+                GREEN
+            )
+            player_score_rect = player_score_text.get_rect(
+                center=(WIDTH // 2, 370)
+            )
+            SCREEN.blit(player_score_text, player_score_rect)
+
+            # Display total misses
+            player_misses_text = FONT.render(
+                "MISSES: " + str(player_1_misses),
+                True,
+                WHITE
+            )
+            player_misses_rect = player_misses_text.get_rect(
+                center=(WIDTH // 2, 430)
+            )
+            SCREEN.blit(player_misses_text, player_misses_rect)
+
+        # -- Two-player results --
+        elif game_mode == "two_player":
+
+            # Create Player 1 score box
+            player_1_box = pygame.Rect(
+                100,
+                260,
+                360,
+                250
+            )
+
+            # Draw Player 1 box background
+            pygame.draw.rect(
+                SCREEN,
+                BUTTON_COLOUR,
+                player_1_box,
+                border_radius=12
+            )
+
+            # Draw Player 1 box border
+            pygame.draw.rect(
+                SCREEN,
+                player_1_crosshair,
+                player_1_box,
+                3,
+                border_radius=12
+            )
+
+            # Display Player 1 name
+            player_1_name_text = FONT.render(
+                player_1_name.upper(),
+                True,
+                WHITE
+            )
+            player_1_name_rect = player_1_name_text.get_rect(
+                center=(280, 310)
+            )
+            SCREEN.blit(player_1_name_text, player_1_name_rect)
+
+            # Display Player 1 score
+            player_1_score_text = FONT.render(
+                "SCORE: " + str(player_1_score),
+                True,
+                GREEN
+            )
+            player_1_score_rect = player_1_score_text.get_rect(
+                center=(280, 370)
+            )
+            SCREEN.blit(player_1_score_text, player_1_score_rect)
+
+            # Display Player 1 misses
+            player_1_misses_text = FONT.render(
+                "MISSES: " + str(player_1_misses),
+                True,
+                WHITE
+            )
+            player_1_misses_rect = player_1_misses_text.get_rect(
+                center=(280, 430)
+            )
+            SCREEN.blit(player_1_misses_text, player_1_misses_rect)
+
+            # Create Player 2 score box
+            player_2_box = pygame.Rect(
+                540,
+                260,
+                360,
+                250
+            )
+
+            # Draw Player 2 box background
+            pygame.draw.rect(
+                SCREEN,
+                BUTTON_COLOUR,
+                player_2_box,
+                border_radius=12
+            )
+
+            # Draw Player 2 box border
+            pygame.draw.rect(
+                SCREEN,
+                player_2_crosshair,
+                player_2_box,
+                3,
+                border_radius=12
+            )
+
+            # Display Player 2 name
+            player_2_name_text = FONT.render(
+                player_2_name.upper(),
+                True,
+                WHITE
+            )
+            player_2_name_rect = player_2_name_text.get_rect(
+                center=(720, 310)
+            )
+            SCREEN.blit(player_2_name_text, player_2_name_rect)
+
+            # Display Player 2 score
+            player_2_score_text = FONT.render(
+                "SCORE: " + str(player_2_score),
+                True,
+                GREEN
+            )
             player_2_score_rect = player_2_score_text.get_rect(
-                center=(WIDTH // 2, 440)
+                center=(720, 370)
             )
             SCREEN.blit(player_2_score_text, player_2_score_rect)
+
+            # Display Player 2 misses
             player_2_misses_text = FONT.render(
                 "MISSES: " + str(player_2_misses),
                 True,
                 WHITE
             )
             player_2_misses_rect = player_2_misses_text.get_rect(
-                center=(WIDTH // 2, 490)
+                center=(720, 430)
             )
             SCREEN.blit(player_2_misses_text, player_2_misses_rect)
 
-        # Back to menu button
+            # Display the winner
+            if player_1_score > player_2_score:
+                winner_text = FONT.render(
+                    player_1_name.upper() + " WINS!",
+                    True,
+                    player_1_crosshair
+                )
+            elif player_2_score > player_1_score:
+                winner_text = FONT.render(
+                    player_2_name.upper() + " WINS!",
+                    True,
+                    player_2_crosshair
+                )
+            else:
+                winner_text = FONT.render(
+                    "IT'S A DRAW!",
+                    True,
+                    YELLOW
+                )
+
+            winner_rect = winner_text.get_rect(
+                center=(WIDTH // 2, 555)
+            )
+            SCREEN.blit(winner_text, winner_rect)
+
+        # Back to main menu button
         back_to_menu_button = draw_button(
             "BACK TO MAIN MENU",
             350,
-            600,
+            650,
             300,
             60
         )
@@ -1630,6 +1877,7 @@ while running:
                     player_2_name = ""
                     current_input = None
                     difficulty = "Easy"
+                    name_error = ""
                     crosshair_error = ""
 
                     # Reset Player 1 crosshair position
@@ -1650,6 +1898,7 @@ while running:
                     player_2_name = ""
                     current_input = None
                     difficulty = "Easy"
+                    name_error = ""
                     crosshair_error = ""
 
                     # Reset both player crosshair positions
@@ -1808,12 +2057,12 @@ while running:
                         click_sound.play()
                     game_state = MODE_SELECT
 
-            # -- Game Over Screen Buttons --
-            elif game_state == GAME_OVER:
-                if back_to_menu_button.collidepoint(event.pos):
-                    if sound_enabled:
-                        click_sound.play()
-                    game_state = MENU
+        # -- Game Over Screen Buttons --
+        elif game_state == GAME_OVER:
+            if back_to_menu_button.collidepoint(event.pos):
+                if sound_enabled:
+                    click_sound.play()
+                game_state = MENU
 
 
         # -- Keyboard Input --
