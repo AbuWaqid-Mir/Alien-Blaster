@@ -105,6 +105,8 @@ background_2 = pygame.image.load("images/background_2.png")
 background_2_image = pygame.transform.scale(background_2, (WIDTH,HEIGHT))
 setup_background = pygame.image.load("images/setup_background.png")
 setup_background = pygame.transform.scale(setup_background, (WIDTH, HEIGHT))
+game_background = pygame.image.load("images/game_background.png")
+game_background = pygame.transform.scale(game_background, (WIDTH, HEIGHT))
 
 # -- Load sound effects --
 click_sound = pygame.mixer.Sound("sounds/click.wav")
@@ -1309,7 +1311,7 @@ while running:
 
     # -- Game Screen --
     elif game_state == GAME:
-        SCREEN.fill(BLACK)
+        SCREEN.blit(game_background,(0,0))
 
         # -- Continuous 2-player crosshair movement --
         if game_mode == "two_player":
@@ -2057,12 +2059,12 @@ while running:
                         click_sound.play()
                     game_state = MODE_SELECT
 
-        # -- Game Over Screen Buttons --
-        elif game_state == GAME_OVER:
-            if back_to_menu_button.collidepoint(event.pos):
-                if sound_enabled:
-                    click_sound.play()
-                game_state = MENU
+            # -- Game Over Screen Buttons --
+            elif game_state == GAME_OVER:
+                if back_to_menu_button.collidepoint(event.pos):
+                    if sound_enabled:
+                        click_sound.play()
+                    game_state = MENU
 
 
         # -- Keyboard Input --

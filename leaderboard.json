@@ -1,5 +1,19 @@
 [
     {
+        "name": "gameified",
+        "mode": "single",
+        "difficulty": "Medium",
+        "score": 51,
+        "misses": 47
+    },
+    {
+        "name": "test_run_today",
+        "mode": "single",
+        "difficulty": "Medium",
+        "score": 48,
+        "misses": 12
+    },
+    {
         "name": "c",
         "mode": "single",
         "difficulty": "Medium",
