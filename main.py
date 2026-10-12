@@ -1169,7 +1169,7 @@ while running:
             player_2_crosshair_button = draw_button(
                 "P2 CROSSHAIR: " + get_colour_name(player_2_crosshair),
                 550,
-                350,
+                330,
                 300,
                 60
             )
