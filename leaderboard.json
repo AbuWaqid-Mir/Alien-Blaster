@@ -28,10 +28,10 @@
         "misses": 16
     },
     {
-        "name": "c",
+        "name": "debug_mod",
         "mode": "single",
-        "difficulty": "Easy",
-        "score": 7,
+        "difficulty": "Medium",
+        "score": 19,
         "misses": 5
     }
 ]
