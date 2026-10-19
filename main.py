@@ -515,7 +515,7 @@ while running:
             WHITE
         )
         title_rect = TITLE.get_rect(
-            center=(WIDTH // 2, 150)
+            center=(WIDTH // 2, 270)
         )
         SCREEN.blit(TITLE, title_rect)
 
@@ -523,7 +523,7 @@ while running:
         single_leaderboard_button = draw_button(
             "SINGLE PLAYER",
             350,
-            280,
+            320,
             300,
             60
         )
@@ -532,7 +532,7 @@ while running:
         two_player_leaderboard_button = draw_button(
             "2 PLAYERS",
             350,
-            380,
+            400,
             300,
             60
         )
