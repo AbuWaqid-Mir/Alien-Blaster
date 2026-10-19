@@ -61,14 +61,25 @@ Run main.py.
 <img width="1247" height="1000" alt="image" src="https://github.com/user-attachments/assets/e4f6e964-af91-4894-b49c-c520b5e1cf09" />
 <img width="1247" height="1000" alt="image" src="https://github.com/user-attachments/assets/90fe4d35-a64b-43a2-8846-1ca87b2e1b2f" />
 <img width="1250" height="1005" alt="image" src="https://github.com/user-attachments/assets/601d0b69-37cc-4601-8672-0ba62f856fb9" />
+<img width="1240" height="1005" alt="image" src="https://github.com/user-attachments/assets/8b09251f-4ef8-4c82-878b-5f9ad260d72f" />
+<img width="1246" height="1003" alt="image" src="https://github.com/user-attachments/assets/991bc742-2d49-4811-a1df-cd65e3863e7e" />
 
 ### Future Developments
+- Add new enemy types with different movement patterns
+- Introduce power-ups (e.g. freeze enemies for 5 seconds, double points for 5 seconds)
+- Add more difficulty levels
+- Implement better backgrounds
+- Add background music
+- Animate the enemy sprites
 
 ### What I Learned
+Throughout this project, I learned and practised how to:
+1. Use Pygame to create a 2D game.
+2. Detect collisions between the crosshair and enemies.
+3. Manage different game screens using game states.
+4. Implement single-player and 2-player gameplay
+5. Use sound effects and allow players to toggle them on or off
+6. Save and load leaderboard data using JSON.
 
 ### Author
-
-
-
-
-
+- GitHub: https://github.com/AbuWaqid-Mir
