@@ -62,6 +62,13 @@ Run main.py.
 <img width="1247" height="1000" alt="image" src="https://github.com/user-attachments/assets/90fe4d35-a64b-43a2-8846-1ca87b2e1b2f" />
 <img width="1250" height="1005" alt="image" src="https://github.com/user-attachments/assets/601d0b69-37cc-4601-8672-0ba62f856fb9" />
 
+### Future Developments
+
+### What I Learned
+
+### Author
+
+
 
 
 
